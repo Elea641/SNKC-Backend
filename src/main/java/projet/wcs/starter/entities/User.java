@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import projet.wcs.starter.models.Role;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,6 +20,9 @@ public class User {
 
     @Column(nullable = false, length = 64)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Sneakers> sneakers;
 
     @NotNull(message = "User roles can't be null")
     @ManyToMany
