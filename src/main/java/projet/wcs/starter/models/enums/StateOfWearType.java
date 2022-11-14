@@ -5,7 +5,7 @@ public enum StateOfWearType {
     TRES_BON_ETAT ("Très bon état"),
     BON_ETAT ("Bon état"),
     ETAT_MOYEN ("Etat moyen"),
-    USE ("usé");
+    USE ("Usé");
 
     private final String name;
 

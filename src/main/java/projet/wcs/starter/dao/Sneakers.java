@@ -1,10 +1,11 @@
-package projet.wcs.starter.entities;
+package projet.wcs.starter.dao;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import projet.wcs.starter.models.enums.ColorType;
 import projet.wcs.starter.models.enums.StateOfWearType;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Sneakers {
     private int size;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "stateOfWear")
     private StateOfWearType stateOfWear;
 
     @NotNull
@@ -40,10 +43,10 @@ public class Sneakers {
 
     private Date updatedDate = new Date();
 
-    private int follows = 0;
-
     private Date dateOfPurchase;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "mainColor")
     private ColorType mainColor;
 
     private boolean authentification;
@@ -56,7 +59,11 @@ public class Sneakers {
         this.size = size;
     }
 
-    public int getId() {
+    public Sneakers(int id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -105,19 +112,14 @@ public class Sneakers {
     }
 
     public List<Picture> getPictures() {
-        return pictures;
+        if(pictures != null) {
+            return pictures;
+        }
+        return new ArrayList<>();
     }
 
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
-    }
-
-    public int getFollows() {
-        return follows;
-    }
-
-    public void setFollows(int follows) {
-        this.follows = follows;
     }
 
     public Date getCreatedDate() {
@@ -145,7 +147,8 @@ public class Sneakers {
     }
 
     public ColorType getMainColor() {
-        return mainColor;
+
+            return mainColor;
     }
 
     public void setMainColor(ColorType mainColor) {
