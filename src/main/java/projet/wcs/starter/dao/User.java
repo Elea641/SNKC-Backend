@@ -1,9 +1,10 @@
-package projet.wcs.starter.entities;
+package projet.wcs.starter.dao;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import projet.wcs.starter.models.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,16 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Sneakers> sneakers;
+    private List<Sneakers> sneakers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Room> userRooms = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "attendees")
+    private List<Room> attendingRooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "winner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Room> winningRooms = new ArrayList<>();
 
     @NotNull(message = "User roles can't be null")
     @ManyToMany
@@ -50,6 +60,10 @@ public class User {
         this.password = password;
     }
 
+    public User(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -69,4 +83,39 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public List<Sneakers> getSneakers() {
+        return sneakers;
+    }
+
+    public void setSneakers(List<Sneakers> sneakers) {
+        this.sneakers = sneakers;
+    }
+
+    public List<Room> getAttendingRooms() {
+        return userRooms;
+    }
+
+    public void setAttendingRooms(List<Room> rooms) {
+        this.attendingRooms = rooms;
+    }
+
+    public List<Room> getUserRooms() {
+        return userRooms;
+    }
+
+    public void setUserRooms(List<Room> userRooms) {
+        this.attendingRooms = userRooms;
+    }
+
+    public List<Room> getWinningRooms() {
+        return winningRooms;
+    }
+
+    public void setWinningRooms(List<Room> winningRooms) {
+        this.winningRooms = winningRooms;
+    }
+
+
+
 }
