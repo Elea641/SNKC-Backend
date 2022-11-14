@@ -24,7 +24,7 @@ public class SneakersController {
         return repo.findAll();
     }
 
-    @PostMapping("/sneakers")
+    @PutMapping("/sneakers")
     public Sneakers createSneakers(@RequestBody Sneakers sneakers) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         sneakers.setUser(userRepository.findById(userDetails.getId()).get());
