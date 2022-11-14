@@ -1,5 +1,6 @@
-package projet.wcs.starter.entities;
+package projet.wcs.starter.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,6 +15,7 @@ public class Picture {
     private String url;
 
     @ManyToOne
+    @JsonIgnoreProperties("pictures")
     @JoinColumn(name = "sneakers_id")
     private Sneakers sneakers;
 
@@ -34,5 +36,17 @@ public class Picture {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Sneakers getSneakers() {
+        return sneakers;
+    }
+
+    public void setSneakers(Sneakers sneakers) {
+        this.sneakers = sneakers;
     }
 }
