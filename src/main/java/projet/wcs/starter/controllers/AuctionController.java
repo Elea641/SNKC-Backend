@@ -23,7 +23,7 @@ public class AuctionController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("auctions/all")
+    @GetMapping("/auctions/all")
     public List<AuctionDto> list() {
         return repo.findAll().stream().map(
                 auctions -> modelMapper.map(auctions, AuctionDto.class)
