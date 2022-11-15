@@ -4,10 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import projet.wcs.starter.convertors.PicturesListConvertor;
-import projet.wcs.starter.convertors.RoomsListConvertor;
-import projet.wcs.starter.convertors.SneakersListConvertor;
-import projet.wcs.starter.convertors.UsersListConvertor;
+import projet.wcs.starter.convertors.*;
 import projet.wcs.starter.dto.PictureDto;
 import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dto.SneakersDto;
@@ -32,6 +29,7 @@ public class Mapper {
                         mapper.map(src -> src.getOwner().getId(), RoomDto::setOwnerId);
                         mapper.map(src -> src.getWinner().getId(), RoomDto::setWinnerId);
                         mapper.map(src -> src.getSneakers().getId(), RoomDto::setSneakersId);
+                        mapper.using(new AuctionsListConvertor()).map(Room::getAuctions, RoomDto::setAuctionsId);
                 }
         );
 
@@ -41,6 +39,7 @@ public class Mapper {
                     mapper.using(new SneakersListConvertor()).map(User::getSneakers, UserDto::setSneakersId);
                     mapper.using(new RoomsListConvertor()).map(User::getUserRooms, UserDto::setUserRoomsId);;
                     mapper.using(new RoomsListConvertor()).map(User::getAttendingRooms, UserDto::setAttendingRoomsId);
+                    mapper.using(new AuctionsListConvertor()).map(User::getAuctions, UserDto::setAuctionsId);
                 }
         );
 

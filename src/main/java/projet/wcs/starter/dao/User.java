@@ -23,6 +23,9 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
+    private List<Auction> auctions  = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
     private List<Sneakers> sneakers = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -116,6 +119,11 @@ public class User {
         this.winningRooms = winningRooms;
     }
 
+    public List<Auction> getAuctions() {
+        return auctions;
+    }
 
-
+    public void setAuctions(List<Auction> auctions) {
+        this.auctions = auctions;
+    }
 }
