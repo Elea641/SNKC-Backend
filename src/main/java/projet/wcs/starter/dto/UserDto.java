@@ -9,6 +9,7 @@ public class UserDto {
     private List<Integer> sneakersId;
     private List<Integer> userRoomsId;
     private List<Integer> attendingRoomsId;
+    private List<Integer> auctionsId;
 
     public Integer getId() {
         return id;
@@ -56,5 +57,13 @@ public class UserDto {
 
     public void setAttendingRoomsId(List<Integer> attendingRoomsId) {
         this.attendingRoomsId = attendingRoomsId;
+    }
+
+    public List<Integer> getAuctionsId() {
+        return auctionsId;
+    }
+
+    public void setAuctionsId(List<Integer> auctionsId) {
+        this.auctionsId = auctionsId;
     }
 }

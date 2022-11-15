@@ -1,5 +1,8 @@
 package projet.wcs.starter.dto;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 public class RoomDto {
     private Integer id;
 
@@ -12,6 +15,12 @@ public class RoomDto {
     private int initialPrice;
 
     private Integer winnerId;
+
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
+
+    private List<Integer> auctionsId;
 
     public Integer getId() {
         return id;
@@ -59,5 +68,29 @@ public class RoomDto {
 
     public void setWinnerId(Integer winnerId) {
         this.winnerId = winnerId;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public List<Integer> getAuctionsId() {
+        return auctionsId;
+    }
+
+    public void setAuctionsId(List<Integer> auctions) {
+        this.auctionsId = auctions;
     }
 }
