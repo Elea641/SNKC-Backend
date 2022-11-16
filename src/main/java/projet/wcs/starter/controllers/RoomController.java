@@ -5,8 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import projet.wcs.starter.dto.AuctionDto;
 import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dao.Room;
+import projet.wcs.starter.repositories.AuctionRepository;
 import projet.wcs.starter.repositories.RoomRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
 
@@ -20,6 +22,9 @@ public class RoomController {
 
     @Autowired
     private RoomRepository roomRepo;
+
+    @Autowired
+    private AuctionRepository auctionRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -70,5 +75,14 @@ public class RoomController {
     public boolean deleteRoom(@PathVariable Integer id) {
         roomRepo.deleteById(id);
         return true;
+    }
+
+    @GetMapping("/room/{id}/auctions")
+    public List<AuctionDto> auctionsByRoom(@PathVariable Integer id) {
+        return auctionRepo.findByRoomId(id)
+                .stream()
+                .map(
+                        auctions -> modelMapper.map(auctions, AuctionDto.class)
+                ).collect(Collectors.toList());
     }
 }

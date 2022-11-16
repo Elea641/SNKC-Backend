@@ -45,6 +45,9 @@ public class Room {
     @JoinColumn(name = "winner_id")
     private User winner;
 
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Auction> auctions = new ArrayList<>();
+
     public Room() {}
 
     public Room(User owner, Sneakers sneakers, int initialPrice) {
@@ -116,6 +119,14 @@ public class Room {
 
     public void setWinner(User winner) {
         this.winner = winner;
+    }
+
+    public List<Auction> getAuctions() {
+        return auctions;
+    }
+
+    public void setAuctions(List<Auction> auctions) {
+        this.auctions = auctions;
     }
 
     private Date getAWeekLater() {
