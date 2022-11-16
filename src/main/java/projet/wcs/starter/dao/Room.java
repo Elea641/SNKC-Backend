@@ -5,10 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Room {
@@ -37,8 +34,8 @@ public class Room {
 
     @ManyToMany
     @JoinTable(name = "room_user",
-    joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<User> attendees = new ArrayList<>();
 
     @ManyToOne
@@ -48,7 +45,8 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Auction> auctions = new ArrayList<>();
 
-    public Room() {}
+    public Room() {
+    }
 
     public Room(User owner, Sneakers sneakers, int initialPrice) {
         this.owner = owner;

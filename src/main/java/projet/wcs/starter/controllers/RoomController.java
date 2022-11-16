@@ -13,6 +13,10 @@ import projet.wcs.starter.repositories.RoomRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
 
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +59,12 @@ public class RoomController {
     public RoomDto createRoom(@RequestBody @Valid RoomDto room) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         room.setOwnerId(userDetails.getId());
+        room.setStartDate(LocalDateTime.now());
+        Date out = Date.from(room.getStartDate().atZone(ZoneId.systemDefault()).toInstant());
+        Calendar c = Calendar.getInstance();
+        c.setTime(out);
+        c.add(Calendar.DATE, 7);
+        room.setEndDate(c.getTime());
         Room savedRoom = roomRepo.save(modelMapper.map(room, Room.class));
         String roomUri = (URI.create("/room" + savedRoom.getId())).toString();
         room.setUri(roomUri);
