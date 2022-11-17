@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface SneakersRepository extends JpaRepository<Sneakers, Integer> {
 
-    Optional<List<Sneakers>> findAllByUserId(int userId);
+    Optional<List<Sneakers>> findSneakerByUserId(int userId);
 
 
 }

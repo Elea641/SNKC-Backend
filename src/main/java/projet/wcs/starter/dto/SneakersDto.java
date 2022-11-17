@@ -9,6 +9,8 @@ public class SneakersDto {
 
     private String uri;
 
+    private Integer ownerId;
+
     private String brand;
 
     private String model;
@@ -28,6 +30,19 @@ public class SneakersDto {
     private String mainColor;
 
 //    private boolean authentification;
+
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
 
     public Integer getId() {
         return id;
