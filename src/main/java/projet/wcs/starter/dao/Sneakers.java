@@ -27,7 +27,7 @@ public class Sneakers {
     private int size;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "stateOfWear")
     private StateOfWearType stateOfWear;
 
@@ -43,13 +43,9 @@ public class Sneakers {
 
     private Date updatedDate = new Date();
 
-    private Date dateOfPurchase;
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "mainColor")
     private ColorType mainColor;
-
-    private boolean authentification;
 
     public Sneakers() {}
 
@@ -138,14 +134,6 @@ public class Sneakers {
         this.updatedDate = updatedDate;
     }
 
-    public Date getDateOfPurchase() {
-        return dateOfPurchase;
-    }
-
-    public void setDateOfPurchase(Date dateOfPurchase) {
-        this.dateOfPurchase = dateOfPurchase;
-    }
-
     public ColorType getMainColor() {
 
             return mainColor;
@@ -153,13 +141,5 @@ public class Sneakers {
 
     public void setMainColor(ColorType mainColor) {
         this.mainColor = mainColor;
-    }
-
-    public boolean isAuthentification() {
-        return authentification;
-    }
-
-    public void setAuthentification(boolean authentification) {
-        this.authentification = authentification;
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dao.Sneakers;
 import projet.wcs.starter.dto.SneakersDto;
+import projet.wcs.starter.models.enums.ColorType;
+import projet.wcs.starter.models.enums.StateOfWearType;
 import projet.wcs.starter.repositories.SneakersRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
 
@@ -49,8 +51,7 @@ public class SneakersController {
         Optional<List<Sneakers>>  sneakersDao = repo.findSneakerByUserId(userId != null ? userId : userDetails.getId());
         if (sneakersDao.isPresent() && sneakersDao.get().size() > 0){
             return sneakersDao.stream()
-                    .map(
-                            sneakers -> modelMapper.map(sneakers, SneakersDto.class)
+                    .map(sneakers -> modelMapper.map(sneakers, SneakersDto.class)
                     ).collect(Collectors.toList());
         }
         return new ArrayList<SneakersDto>();
@@ -59,7 +60,9 @@ public class SneakersController {
     @PostMapping("/sneakers")
     public SneakersDto createSneakers(@RequestBody @Valid SneakersDto sneaker) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        sneaker.setOwnerId(userDetails.getId());
+        sneaker.setUserId(userDetails.getId());
+        sneaker.setMainColor(ColorType.BLACK);
+        sneaker.setStateOfWear(StateOfWearType.NEUF);
         Sneakers savedSneaker = repo.save(modelMapper.map(sneaker, Sneakers.class));
         String sneakerUri = (URI.create("/sneakers" + savedSneaker.getId())).toString();
         sneaker.setUri(sneakerUri);
@@ -74,7 +77,7 @@ public class SneakersController {
         sneakersToUpdate.setSize(sneakers.getSize());
         sneakersToUpdate.setStateOfWear(sneakers.getStateOfWear());
         sneakersToUpdate.setMainColor(sneakers.getMainColor());
-        sneakersToUpdate.setPictures(sneakers.getPictures());
+        sneakersToUpdate.setPicturesId(sneakers.getPicturesId());
         repo.save(modelMapper.map(sneakersToUpdate, Sneakers.class));
         return modelMapper.map(sneakersToUpdate, SneakersDto.class);
     }

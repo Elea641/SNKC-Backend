@@ -1,5 +1,6 @@
 package projet.wcs.starter.dto;
 
+import projet.wcs.starter.models.enums.ColorType;
 import projet.wcs.starter.models.enums.StateOfWearType;
 
 import java.util.List;
@@ -9,39 +10,23 @@ public class SneakersDto {
 
     private String uri;
 
-    private Integer ownerId;
-
     private String brand;
 
     private String model;
 
     private int size;
 
-    private StateOfWearType stateOfWear;
+    private String stateOfWear;
 
     private Integer userId;
 
-    private List<Integer> pictures;
-
-    private int follows;
-
-//    private String dateOfPurchase;
+    private List<Integer> picturesId;
 
     private String mainColor;
-
-//    private boolean authentification;
 
 
     public void setUri(String uri) {
         this.uri = uri;
-    }
-
-    public Integer getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
     }
 
     public Integer getId() {
@@ -80,11 +65,30 @@ public class SneakersDto {
         this.size = size;
     }
 
-    public StateOfWearType getStateOfWear() {
-        return stateOfWear;
+    public String getStateOfWear() {
+        switch(this.stateOfWear) {
+            case StateOfWearType.NEUF:
+                return "Neuf";
+
+            case StateOfWearType.TRES_BON_ETAT:
+                return "Très bon état";
+
+            case StateOfWearType.BON_ETAT:
+                return "Bon état";
+
+            case StateOfWearType.ETAT_MOYEN:
+                return "Etat moyen";
+
+            case StateOfWearType.USE:
+                return "Usé";
+
+            default:
+                throw new Error("StateOfWear not recognized");
+        }
+    }
     }
 
-    public void setStateOfWear(StateOfWearType stateOfWear) {
+    public void setStateOfWear(String stateOfWear) {
         this.stateOfWear = stateOfWear;
     }
 
@@ -96,30 +100,14 @@ public class SneakersDto {
         this.userId = userId;
     }
 
-    public List<Integer> getPictures() {
-        return pictures;
+    public List<Integer> getPicturesId() {
+        return picturesId;
     }
 
-    public void setPictures(List<Integer> pictures) {
-        this.pictures = pictures;
+    public void setPicturesId(List<Integer> pictures) {
+        this.picturesId = pictures;
     }
 
-    public int getFollows() {
-        return follows;
-    }
-
-    public void setFollows(int follows) {
-        this.follows = follows;
-    }
-
-//    public String getDateOfPurchase() {
-//        return dateOfPurchase;
-//    }
-//
-//    public void setDateOfPurchase(String dateOfPurchase) {
-//        this.dateOfPurchase = dateOfPurchase;
-//    }
-//
     public String getMainColor() {
         return mainColor;
     }
@@ -127,13 +115,5 @@ public class SneakersDto {
     public void setMainColor(String mainColor) {
         this.mainColor = mainColor;
     }
-//
-//    public boolean isAuthentification() {
-//        return authentification;
-//    }
-//
-//    public void setAuthentification(boolean authentification) {
-//        this.authentification = authentification;
-//    }
 
 }

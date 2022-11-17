@@ -46,8 +46,8 @@ public class Mapper {
         TypeMap<Sneakers, SneakersDto> propertyMapperSneakers = modelMapper.createTypeMap(Sneakers.class, SneakersDto.class);
         propertyMapperSneakers.addMappings(
                 mapper -> {
-                    mapper.using(new UsersListConvertor()).map(Sneakers::getUser, SneakersDto::setUserId);
-                    mapper.using(new PicturesListConvertor()).map(Sneakers::getPictures, SneakersDto::setPictures);;
+                    mapper.map(src -> src.getUser().getId(), SneakersDto::setUserId);
+                    mapper.using(new PicturesListConvertor()).map(Sneakers::getPictures, SneakersDto::setPicturesId);;
                 }
         );
 
