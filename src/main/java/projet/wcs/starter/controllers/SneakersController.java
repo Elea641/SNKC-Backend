@@ -25,6 +25,5 @@ public class SneakersController {
                 sneakers -> modelMapper.map(sneakers, SneakersDto.class)
         ).collect(Collectors.toList());
     }
-
 }
 
