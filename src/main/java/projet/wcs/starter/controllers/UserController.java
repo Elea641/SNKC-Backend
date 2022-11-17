@@ -4,10 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dao.User;
 import projet.wcs.starter.dto.UserDto;
 import projet.wcs.starter.repositories.UserRepository;
@@ -40,6 +37,15 @@ public class UserController {
         User user = repo.findById(userDetails.getId()).get();
         UserDto userDto = modelMapper.map(user, UserDto.class);
         return userDto;
+    }
+
+    @PatchMapping("/me")
+    public  UserDto updateMe(@RequestBody UserDto userDto) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = repo.findById(userDetails.getId()).get();
+        user.setEmail(userDto.getEmail());
+        user = repo.save(user);
+        return modelMapper.map(user, UserDto.class);
     }
 
 

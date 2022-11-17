@@ -66,26 +66,7 @@ public class SneakersDto {
     }
 
     public String getStateOfWear() {
-        switch(this.stateOfWear) {
-            case StateOfWearType.NEUF:
-                return "Neuf";
-
-            case StateOfWearType.TRES_BON_ETAT:
-                return "Très bon état";
-
-            case StateOfWearType.BON_ETAT:
-                return "Bon état";
-
-            case StateOfWearType.ETAT_MOYEN:
-                return "Etat moyen";
-
-            case StateOfWearType.USE:
-                return "Usé";
-
-            default:
-                throw new Error("StateOfWear not recognized");
-        }
-    }
+        return stateOfWear;
     }
 
     public void setStateOfWear(String stateOfWear) {

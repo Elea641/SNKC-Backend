@@ -61,8 +61,8 @@ public class SneakersController {
     public SneakersDto createSneakers(@RequestBody @Valid SneakersDto sneaker) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         sneaker.setUserId(userDetails.getId());
-        sneaker.setMainColor(ColorType.BLACK);
-        sneaker.setStateOfWear(StateOfWearType.NEUF);
+        sneaker.setMainColor(String.valueOf(ColorType.BLACK));
+        sneaker.setStateOfWear(String.valueOf(StateOfWearType.NEUF));
         Sneakers savedSneaker = repo.save(modelMapper.map(sneaker, Sneakers.class));
         String sneakerUri = (URI.create("/sneakers" + savedSneaker.getId())).toString();
         sneaker.setUri(sneakerUri);
@@ -87,7 +87,6 @@ public class SneakersController {
         repo.deleteById(id);
         return true;
     }
-
 }
 
 
