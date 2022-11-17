@@ -6,11 +6,15 @@ public class AuctionDto {
 
     private Integer id;
 
-    private Integer userId;
-
     private Integer roomId;
 
+   private Integer userId;
+
+   private String userUsername;
+
     private int offer;
+
+    private LocalDateTime date;
 
 
     public Integer getId() {
@@ -19,14 +23,6 @@ public class AuctionDto {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer user) {
-        this.userId = user;
     }
 
     public Integer getRoomId() {
@@ -45,4 +41,27 @@ public class AuctionDto {
         this.offer = offer;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public String getUserUsername() {
+        return userUsername;
+    }
+
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
+    }
 }

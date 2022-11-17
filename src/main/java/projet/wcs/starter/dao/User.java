@@ -22,6 +22,9 @@ public class User {
     @Column(nullable = false, length = 64)
     private String password;
 
+    @Column
+    private String username;
+
     @OneToMany(mappedBy = "user")
     private List<Auction> auctions  = new ArrayList<>();
 
@@ -125,5 +128,13 @@ public class User {
 
     public void setAuctions(List<Auction> auctions) {
         this.auctions = auctions;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
