@@ -1,5 +1,6 @@
 package projet.wcs.starter.dto;
 
+import projet.wcs.starter.models.enums.ColorType;
 import projet.wcs.starter.models.enums.StateOfWearType;
 
 import java.util.List;
@@ -15,19 +16,18 @@ public class SneakersDto {
 
     private int size;
 
-    private StateOfWearType stateOfWear;
+    private String stateOfWear;
 
     private Integer userId;
 
-    private List<Integer> pictures;
-
-    private int follows;
-
-//    private String dateOfPurchase;
+    private List<Integer> picturesId;
 
     private String mainColor;
 
-//    private boolean authentification;
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
     public Integer getId() {
         return id;
@@ -65,11 +65,11 @@ public class SneakersDto {
         this.size = size;
     }
 
-    public StateOfWearType getStateOfWear() {
+    public String getStateOfWear() {
         return stateOfWear;
     }
 
-    public void setStateOfWear(StateOfWearType stateOfWear) {
+    public void setStateOfWear(String stateOfWear) {
         this.stateOfWear = stateOfWear;
     }
 
@@ -81,30 +81,14 @@ public class SneakersDto {
         this.userId = userId;
     }
 
-    public List<Integer> getPictures() {
-        return pictures;
+    public List<Integer> getPicturesId() {
+        return picturesId;
     }
 
-    public void setPictures(List<Integer> pictures) {
-        this.pictures = pictures;
+    public void setPicturesId(List<Integer> pictures) {
+        this.picturesId = pictures;
     }
 
-    public int getFollows() {
-        return follows;
-    }
-
-    public void setFollows(int follows) {
-        this.follows = follows;
-    }
-
-//    public String getDateOfPurchase() {
-//        return dateOfPurchase;
-//    }
-//
-//    public void setDateOfPurchase(String dateOfPurchase) {
-//        this.dateOfPurchase = dateOfPurchase;
-//    }
-//
     public String getMainColor() {
         return mainColor;
     }
@@ -112,13 +96,5 @@ public class SneakersDto {
     public void setMainColor(String mainColor) {
         this.mainColor = mainColor;
     }
-//
-//    public boolean isAuthentification() {
-//        return authentification;
-//    }
-//
-//    public void setAuthentification(boolean authentification) {
-//        this.authentification = authentification;
-//    }
 
 }

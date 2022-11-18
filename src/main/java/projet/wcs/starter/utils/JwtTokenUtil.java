@@ -26,12 +26,13 @@ public class JwtTokenUtil {
     private int jwtExpirationMs;
 
     public String generateJwtToken(UserDetailsImpl userPrincipal, List<String> roles) {
-        return generateTokenFromUsername(userPrincipal.getUsername(), roles);
+        return generateTokenFromUsername(userPrincipal.getUsername(), roles, userPrincipal.getId());
     }
 
-    public String generateTokenFromUsername(String username, List<String> roles) {
+    public String generateTokenFromUsername(String username, List<String> roles, int id) {
         Map<String, Object> customClaimRoles = new HashMap<String, Object>();
         customClaimRoles.put("roles", roles);
+        customClaimRoles.put("id", id);
         return Jwts.builder().addClaims(customClaimRoles).setSubject(username).setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();

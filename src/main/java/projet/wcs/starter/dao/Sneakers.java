@@ -27,7 +27,7 @@ public class Sneakers {
     private int size;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "stateOfWear")
     private StateOfWearType stateOfWear;
 
@@ -43,13 +43,9 @@ public class Sneakers {
 
     private Date updatedDate = new Date();
 
-    private Date dateOfPurchase;
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "mainColor")
     private ColorType mainColor;
-
-    private boolean authentification;
 
     public Sneakers() {}
 
@@ -99,8 +95,26 @@ public class Sneakers {
         return stateOfWear;
     }
 
-    public void setStateOfWear(StateOfWearType stateOfWear) {
-        this.stateOfWear = stateOfWear;
+    public String setStateOfWear(StateOfWearType stateOfWear) {
+        switch(stateOfWear) {
+            case NEUF:
+                return "Neuf";
+
+            case TRES_BON_ETAT:
+                return "Très bon état";
+
+            case BON_ETAT:
+                return "Bon état";
+
+            case ETAT_MOYEN:
+                return "Etat moyen";
+
+            case USE:
+                return "Usé";
+
+            default:
+                throw new Error("StateOfWear not recognized");
+        }
     }
 
     public User getUser() {
@@ -138,28 +152,55 @@ public class Sneakers {
         this.updatedDate = updatedDate;
     }
 
-    public Date getDateOfPurchase() {
-        return dateOfPurchase;
-    }
-
-    public void setDateOfPurchase(Date dateOfPurchase) {
-        this.dateOfPurchase = dateOfPurchase;
-    }
-
     public ColorType getMainColor() {
 
             return mainColor;
     }
 
-    public void setMainColor(ColorType mainColor) {
-        this.mainColor = mainColor;
-    }
+    public String setMainColor(ColorType mainColor) {
+        switch(mainColor) {
 
-    public boolean isAuthentification() {
-        return authentification;
-    }
+            case WHITE:
+                return "White";
 
-    public void setAuthentification(boolean authentification) {
-        this.authentification = authentification;
+            case BLACK:
+                return "Black";
+
+            case RED:
+                return "Red";
+
+            case BLUE:
+                return "Blue";
+
+            case GREEN:
+                return "Green";
+
+            case PURPLE:
+                return "Purple";
+
+            case YELLOW:
+                return "Yellow";
+
+            case ORANGE:
+                return "Orange";
+
+            case PINK:
+                return "Pink";
+
+            case BROWN:
+                return "Brown";
+
+            case GREY:
+                return "Grey";
+
+            case MULTI:
+                return "Multi";
+
+            case OTHER:
+                return "Other";
+
+            default:
+                throw new Error("Colors not recognized");
+        }
     }
 }
