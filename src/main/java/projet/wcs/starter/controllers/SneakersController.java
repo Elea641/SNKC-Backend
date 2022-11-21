@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dao.Sneakers;
+import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dto.SneakersDto;
 import projet.wcs.starter.models.enums.ColorType;
 import projet.wcs.starter.models.enums.StateOfWearType;
@@ -42,27 +43,31 @@ public class SneakersController {
 
     /**
      * Renvoie les sneakers de l'utilisateur connecté par défaut. Sinon celles de l'utilisateur passé en paramètre
-     * @param userId Id de l'utilisateur.
      * @return Liste de sneakers Dto.
      */
     @GetMapping("/sneakers")
-    public List<SneakersDto> sneakersByOwner(@RequestParam(required = false) Integer userId) {
+    public List<SneakersDto> sneakersByUser() {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<List<Sneakers>>  sneakersDao = repoSneakers.findSneakerByUserId(userId != null ? userId : userDetails.getId());
-        if (sneakersDao.isPresent() && sneakersDao.get().size() > 0){
-            return sneakersDao.stream()
+            return repoSneakers.findSneakerByUserId(userDetails.getId())
+                    .stream()
                     .map(sneakers -> modelMapper.map(sneakers, SneakersDto.class)
                     ).collect(Collectors.toList());
         }
-        return new ArrayList<SneakersDto>();
+
+    @GetMapping("/sneakers/last")
+    public List<SneakersDto> sneakersLast() {
+        return repoSneakers.findLastSneakers()
+                .stream()
+                .map(sneakers -> modelMapper.map(sneakers, SneakersDto.class)
+                ).collect(Collectors.toList());
     }
 
     @PostMapping("/sneakers")
     public SneakersDto createSneakers(@RequestBody @Valid SneakersDto sneaker) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         sneaker.setUserId(userDetails.getId());
-        sneaker.setMainColor(String.valueOf(ColorType.BLACK));
-        sneaker.setStateOfWear(String.valueOf(StateOfWearType.NEUF));
+        sneaker.setMainColor(sneaker.getMainColor());
+        sneaker.setStateOfWear(sneaker.getStateOfWear());
         Sneakers savedSneaker = repoSneakers.save(modelMapper.map(sneaker, Sneakers.class));
         String sneakerUri = (URI.create("/sneakers" + savedSneaker.getId())).toString();
         sneaker.setUri(sneakerUri);
