@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dto.AuctionDto;
 import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dao.Room;
+import projet.wcs.starter.dto.SneakersDto;
 import projet.wcs.starter.repositories.AuctionRepository;
 import projet.wcs.starter.repositories.RoomRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
@@ -53,6 +54,14 @@ public class RoomController {
                 .map(
                 rooms -> modelMapper.map(rooms, RoomDto.class)
         ).collect(Collectors.toList());
+    }
+
+    @GetMapping("/rooms/last")
+    public List<RoomDto> roomsLast() {
+        return roomRepo.findLastRooms()
+                .stream()
+                .map(room -> modelMapper.map(room, RoomDto.class)
+                ).collect(Collectors.toList());
     }
 
     @PostMapping("/rooms")
