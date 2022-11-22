@@ -5,9 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import projet.wcs.starter.models.enums.ColorType;
 import projet.wcs.starter.models.enums.StateOfWearType;
 
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "sneakers")
@@ -36,8 +35,9 @@ public class Sneakers {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "sneakers")
-    private List<Picture> pictures;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] picture;
 
     private Date createdDate = new Date();
 
@@ -125,15 +125,20 @@ public class Sneakers {
         this.user = user;
     }
 
-    public List<Picture> getPictures() {
-        if(pictures != null) {
-            return pictures;
-        }
-        return new ArrayList<>();
+    public byte[] getPicture() {
+        return picture;
     }
 
-    public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
+    public String getPictureString() {
+        return picture != null ? new String(picture, StandardCharsets.UTF_8) : null;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public void setPictureString(String picture) {
+        this.picture = picture.getBytes();
     }
 
     public Date getCreatedDate() {

@@ -6,17 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dao.Sneakers;
-import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dto.SneakersDto;
-import projet.wcs.starter.models.enums.ColorType;
-import projet.wcs.starter.models.enums.StateOfWearType;
 import projet.wcs.starter.repositories.SneakersRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
-
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -63,15 +57,18 @@ public class SneakersController {
     }
 
     @PostMapping("/sneakers")
-    public SneakersDto createSneakers(@RequestBody @Valid SneakersDto sneaker) {
+    public SneakersDto createSneakers(@RequestBody @Valid SneakersDto sneakersDto) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        sneaker.setUserId(userDetails.getId());
-        sneaker.setMainColor(sneaker.getMainColor());
-        sneaker.setStateOfWear(sneaker.getStateOfWear());
-        Sneakers savedSneaker = repoSneakers.save(modelMapper.map(sneaker, Sneakers.class));
-        String sneakerUri = (URI.create("/sneakers" + savedSneaker.getId())).toString();
-        sneaker.setUri(sneakerUri);
-        return modelMapper.map(savedSneaker, SneakersDto.class);
+        sneakersDto.setUserId(userDetails.getId());
+        sneakersDto.setMainColor(sneakersDto.getMainColor());
+        sneakersDto.setStateOfWear(sneakersDto.getStateOfWear());
+        Sneakers sneakers = modelMapper.map(sneakersDto, Sneakers.class);
+        sneakers.setPictureString(sneakersDto.getPicture());
+        sneakers = repoSneakers.save(sneakers);
+        String sneakerUri = (URI.create("/sneakers" + sneakers.getId())).toString();
+        sneakersDto = modelMapper.map(sneakers, SneakersDto.class);
+        sneakersDto.setUri(sneakerUri);
+        return sneakersDto;
     }
 
     @PutMapping("/sneakers/{id}")
@@ -82,7 +79,6 @@ public class SneakersController {
         sneakersToUpdate.setSize(sneakers.getSize());
         sneakersToUpdate.setStateOfWear(sneakers.getStateOfWear());
         sneakersToUpdate.setMainColor(sneakers.getMainColor());
-        sneakersToUpdate.setPicturesId(sneakers.getPicturesId());
         repoSneakers.save(modelMapper.map(sneakersToUpdate, Sneakers.class));
         return modelMapper.map(sneakersToUpdate, SneakersDto.class);
     }
