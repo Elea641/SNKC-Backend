@@ -6,17 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dao.Sneakers;
-import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dto.SneakersDto;
-import projet.wcs.starter.models.enums.ColorType;
-import projet.wcs.starter.models.enums.StateOfWearType;
 import projet.wcs.starter.repositories.SneakersRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController

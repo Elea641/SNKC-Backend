@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dto.AuctionDto;
 import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dao.Room;
-import projet.wcs.starter.dto.SneakersDto;
+import projet.wcs.starter.models.enums.ColorType;
+import projet.wcs.starter.models.enums.StateOfWearType;
 import projet.wcs.starter.repositories.AuctionRepository;
 import projet.wcs.starter.repositories.RoomRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
@@ -62,6 +63,76 @@ public class RoomController {
                 .stream()
                 .map(room -> modelMapper.map(room, RoomDto.class)
                 ).collect(Collectors.toList());
+    }
+
+    @GetMapping("/rooms/filter")
+    public List<RoomDto> roomsFilter(@RequestParam(required = false) String brand, @RequestParam(required = false) String model, @RequestParam(required = false)
+    Integer size, @RequestParam(required = false)StateOfWearType stateOfWear, @RequestParam(required = false) ColorType mainColor) {
+        List<Room> rooms;
+        boolean hasBrand = brand != null && brand.length() > 0;
+        boolean hasModel = model != null && model.length() > 0;
+        boolean hasSize = size != null && size > 0;
+        boolean hasStateOfWear = stateOfWear != null;
+        boolean hasMainColor = mainColor != null;
+        if( hasSize && !hasBrand && !hasModel && !hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSize(size);
+        } else if (!hasSize && hasBrand && !hasModel && !hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersBrand(brand);
+        } else if (!hasSize && !hasBrand && !hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersMainColor(mainColor);
+        }  else if (!hasSize && !hasBrand && hasModel && !hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersModel(model);
+        }  else if (!hasSize && !hasBrand && !hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersStateOfWear(stateOfWear);
+        } else if (!hasSize && hasBrand && !hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersMainColorAndSneakersBrand(mainColor, brand);
+        } else if (hasSize && !hasBrand && !hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersMainColorAndSneakersSize(mainColor, size);
+        } else if (!hasSize && !hasBrand && hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersMainColorAndSneakersModel(mainColor, model);
+        } else if (!hasSize && !hasBrand && !hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersMainColorAndSneakersStateOfWear(mainColor, stateOfWear);
+        } else if (hasSize && hasBrand && !hasModel && !hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrand(size, brand);
+        } else if (hasSize && !hasBrand && hasModel && !hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersModel(size, model);
+        } else if (hasSize && !hasBrand && !hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersStateOfWear(size, stateOfWear);
+        } else if (!hasSize && hasBrand && !hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersBrandAndSneakersStateOfWear(brand, stateOfWear);
+        } else if (!hasSize && hasBrand && hasModel && !hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersBrandAndSneakersModel(brand, model);
+        } else if (!hasSize && !hasBrand && hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersModelAndSneakersStateOfWear(model, stateOfWear);
+        } else if (hasSize && hasBrand && hasModel && !hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersModel(size, brand, model);
+        } else if (hasSize && hasBrand && !hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersStateOfWear(size, brand, stateOfWear);
+        } else if (hasSize && hasBrand && !hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersMainColor(size, brand, mainColor);
+        } else if (hasSize && !hasBrand && hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersModelAndSneakersStateOfWear(size, model, stateOfWear);
+        } else if (hasSize && !hasBrand && hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersModelAndSneakersMainColor(size, model, mainColor);
+        } else if (!hasSize && hasBrand && hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersStateOfWear(brand, model, stateOfWear);
+        } else if (!hasSize && hasBrand && hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersMainColor(brand, model, mainColor);
+        } else if (!hasSize && !hasBrand && hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersModelAndSneakersStateOfWearAndSneakersMainColor(model, stateOfWear, mainColor);
+        } else if (hasSize && hasBrand && hasModel && hasStateOfWear && !hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersStateOfWear(size, brand, model, stateOfWear);
+        } else if (hasSize && hasBrand && hasModel && !hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersMainColor(size, brand, model, mainColor);
+        } else if (!hasSize && hasBrand && hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersStateOfWearAndSneakersMainColor(brand, model, stateOfWear, mainColor);
+        } else {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersStateOfWearAndSneakersMainColor(size, brand, model, stateOfWear, mainColor);
+        }
+        return rooms
+                .stream()
+                .map(room -> modelMapper.map(room, RoomDto.class)
+                ).toList();
     }
 
     @PostMapping("/rooms")
