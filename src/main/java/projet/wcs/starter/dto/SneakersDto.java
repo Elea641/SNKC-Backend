@@ -1,5 +1,6 @@
 package projet.wcs.starter.dto;
 
+import jakarta.persistence.Lob;
 import projet.wcs.starter.models.enums.ColorType;
 import projet.wcs.starter.models.enums.StateOfWearType;
 
@@ -20,7 +21,8 @@ public class SneakersDto {
 
     private Integer userId;
 
-    private List<Integer> picturesId;
+    @Lob
+    private String picture;
 
     private String mainColor;
 
@@ -81,12 +83,12 @@ public class SneakersDto {
         this.userId = userId;
     }
 
-    public List<Integer> getPicturesId() {
-        return picturesId;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setPicturesId(List<Integer> pictures) {
-        this.picturesId = pictures;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getMainColor() {
