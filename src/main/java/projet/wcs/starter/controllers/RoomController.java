@@ -116,16 +116,24 @@ public class RoomController {
             rooms = roomRepo.findBySneakersSizeAndSneakersModelAndSneakersMainColor(size, model, mainColor);
         } else if (!hasSize && hasBrand && hasModel && hasStateOfWear && !hasMainColor) {
             rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersStateOfWear(brand, model, stateOfWear);
+        } else if (!hasSize && hasBrand && !hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersBrandAndSneakersStateOfWearAndSneakersMainColor(brand, stateOfWear, mainColor);
         } else if (!hasSize && hasBrand && hasModel && !hasStateOfWear && hasMainColor) {
             rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersMainColor(brand, model, mainColor);
         } else if (!hasSize && !hasBrand && hasModel && hasStateOfWear && hasMainColor) {
             rooms = roomRepo.findBySneakersModelAndSneakersStateOfWearAndSneakersMainColor(model, stateOfWear, mainColor);
+        } else if (hasSize && !hasBrand && !hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersStateOfWearAndSneakersMainColor(size, stateOfWear, mainColor);
         } else if (hasSize && hasBrand && hasModel && hasStateOfWear && !hasMainColor) {
             rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersStateOfWear(size, brand, model, stateOfWear);
         } else if (hasSize && hasBrand && hasModel && !hasStateOfWear && hasMainColor) {
             rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersMainColor(size, brand, model, mainColor);
+        } else if (hasSize && hasBrand && !hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersStateOfWearAndSneakersMainColor(size, brand, stateOfWear, mainColor);
         } else if (!hasSize && hasBrand && hasModel && hasStateOfWear && hasMainColor) {
             rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersStateOfWearAndSneakersMainColor(brand, model, stateOfWear, mainColor);
+        } else if (hasSize && !hasBrand && hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersModelAndSneakersSizeAndSneakersStateOfWearAndSneakersMainColor(model, size, stateOfWear, mainColor);
         } else {
             rooms = roomRepo.findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersStateOfWearAndSneakersMainColor(size, brand, model, stateOfWear, mainColor);
         }
@@ -152,13 +160,10 @@ public class RoomController {
     }
 
     @PutMapping("/room/{id}")
-    public RoomDto updateRoom(@RequestBody @Valid RoomDto room, @PathVariable Integer id) {
-        RoomDto roomToUpdate = modelMapper.map(roomRepo.findById(id).get(), RoomDto.class);
-        roomToUpdate.setInitialPrice(room.getInitialPrice());
-        roomToUpdate.setSneakersId(room.getSneakersId());
-        roomToUpdate.setWinnerId(room.getWinnerId());
-        roomRepo.save(modelMapper.map(roomToUpdate, Room.class));
-        return modelMapper.map(roomToUpdate, RoomDto.class);
+    public RoomDto updateRoom(@RequestBody @Valid RoomDto roomDto, @PathVariable Integer id) {
+        Room room = modelMapper.map(roomDto, Room.class);
+        room.setId(id);
+        return modelMapper.map(roomRepo.save(room), RoomDto.class);
     }
 
     @DeleteMapping("/room/{id}")
