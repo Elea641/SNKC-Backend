@@ -72,15 +72,10 @@ public class SneakersController {
     }
 
     @PutMapping("/sneakers/{id}")
-    public SneakersDto updateSneakers(@RequestBody @Valid SneakersDto sneakers, @PathVariable Integer id) {
-        SneakersDto sneakersToUpdate = modelMapper.map(repoSneakers.findById(id).get(), SneakersDto.class);
-        sneakersToUpdate.setBrand(sneakers.getBrand());
-        sneakersToUpdate.setModel(sneakers.getModel());
-        sneakersToUpdate.setSize(sneakers.getSize());
-        sneakersToUpdate.setStateOfWear(sneakers.getStateOfWear());
-        sneakersToUpdate.setMainColor(sneakers.getMainColor());
-        repoSneakers.save(modelMapper.map(sneakersToUpdate, Sneakers.class));
-        return modelMapper.map(sneakersToUpdate, SneakersDto.class);
+    public SneakersDto updateSneakers(@RequestBody @Valid SneakersDto sneakersDto, @PathVariable Integer id) {
+        sneakersDto.setId(id);
+        Sneakers sneakers = repoSneakers.save(modelMapper.map(sneakersDto, Sneakers.class));
+        return modelMapper.map(sneakers, SneakersDto.class);
     }
 
     @DeleteMapping("/sneakers/{id}")

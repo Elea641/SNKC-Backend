@@ -116,6 +116,8 @@ public class RoomController {
             rooms = roomRepo.findBySneakersSizeAndSneakersModelAndSneakersMainColor(size, model, mainColor);
         } else if (!hasSize && hasBrand && hasModel && hasStateOfWear && !hasMainColor) {
             rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersStateOfWear(brand, model, stateOfWear);
+        } else if (hasSize && !hasBrand && !hasModel && hasStateOfWear && hasMainColor) {
+            rooms = roomRepo.findBySneakersSizeAndSneakersStateOfWearAndSneakersMainColor(size, stateOfWear, mainColor);
         } else if (!hasSize && hasBrand && hasModel && !hasStateOfWear && hasMainColor) {
             rooms = roomRepo.findBySneakersBrandAndSneakersModelAndSneakersMainColor(brand, model, mainColor);
         } else if (!hasSize && !hasBrand && hasModel && hasStateOfWear && hasMainColor) {
