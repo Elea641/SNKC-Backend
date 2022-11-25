@@ -73,9 +73,9 @@ public class SneakersController {
 
     @PutMapping("/sneakers/{id}")
     public SneakersDto updateSneakers(@RequestBody @Valid SneakersDto sneakersDto, @PathVariable Integer id) {
-        sneakersDto.setId(id);
-        Sneakers sneakers = repoSneakers.save(modelMapper.map(sneakersDto, Sneakers.class));
-        return modelMapper.map(sneakers, SneakersDto.class);
+        Sneakers sneakers = modelMapper.map(sneakersDto, Sneakers.class);
+        sneakers.setId(id);
+        return modelMapper.map(repoSneakers.save(sneakers), SneakersDto.class);
     }
 
     @DeleteMapping("/sneakers/{id}")

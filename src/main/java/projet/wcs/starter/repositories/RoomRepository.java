@@ -43,6 +43,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     List<Room> findBySneakersSizeAndSneakersBrandAndSneakersMainColor(int size, String brand, ColorType mainColor);
     List<Room> findBySneakersSizeAndSneakersModelAndSneakersStateOfWear(int size, String model, StateOfWearType stateOfWear);
     List<Room> findBySneakersSizeAndSneakersModelAndSneakersMainColor(int size, String model, ColorType mainColor);
+    List<Room> findBySneakersBrandAndSneakersStateOfWearAndSneakersMainColor(String brand, StateOfWearType stateOfWear, ColorType mainColor);
     List<Room> findBySneakersBrandAndSneakersModelAndSneakersStateOfWear(String brand, String model, StateOfWearType stateOfWear);
     List<Room> findBySneakersBrandAndSneakersModelAndSneakersMainColor(String brand, String model, ColorType mainColor);
     List<Room> findBySneakersSizeAndSneakersStateOfWearAndSneakersMainColor(int size, StateOfWearType stateOfWear, ColorType mainColor);
@@ -50,5 +51,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     List<Room> findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersStateOfWear(int size, String brand, String model, StateOfWearType stateOfWear);
     List<Room> findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersMainColor(int size, String brand, String model, ColorType mainColor);
     List<Room> findBySneakersBrandAndSneakersModelAndSneakersStateOfWearAndSneakersMainColor(String brand, String model, StateOfWearType stateOfWear, ColorType mainColor);
+    List<Room> findBySneakersModelAndSneakersSizeAndSneakersStateOfWearAndSneakersMainColor(String model, int size, StateOfWearType stateOfWear, ColorType mainColor);
+    List<Room> findBySneakersSizeAndSneakersBrandAndSneakersStateOfWearAndSneakersMainColor(int size, String brand, StateOfWearType stateOfWear, ColorType mainColor);
     List<Room> findBySneakersSizeAndSneakersBrandAndSneakersModelAndSneakersStateOfWearAndSneakersMainColor(int size, String brand, String model, StateOfWearType stateOfWear, ColorType mainColor);
 }
