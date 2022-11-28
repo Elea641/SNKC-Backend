@@ -8,6 +8,7 @@ import projet.wcs.starter.dao.Room;
 import projet.wcs.starter.models.enums.ColorType;
 import projet.wcs.starter.models.enums.StateOfWearType;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,6 +20,12 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     @Query(value = "select * from room order by id desc limit 10", nativeQuery = true)
     List<Room> findLastRooms();
+
+    @Query(value = "select * from room as r where r.end_date > :now and r.owner_id = :id", nativeQuery = true)
+    List<Room> findOpenRooms(@Param("now") Date now, @Param("id") int id);
+
+    @Query(value = "select * from room as r where r.end_date <= :now and r.owner_id = :id", nativeQuery = true)
+    List<Room> findClosedRooms(@Param("now") Date now, @Param("id") int id);
 
     @Query(value = "select brand, model, size, state_of_wear, main_color from room inner join sneakers on sneakers.id=room.sneakers_id;", nativeQuery = true)
     List<Room> findRoomFilter();
