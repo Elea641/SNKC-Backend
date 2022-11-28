@@ -6,7 +6,7 @@ public class UserDto {
     private Integer id;
     private String uri;
     private String email;
-    private String userUsername;
+    private String username;
     private List<Integer> sneakersId;
     private List<Integer> userRoomsId;
     private List<Integer> attendingRoomsId;
@@ -36,12 +36,12 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getUserUsername() {
-        return userUsername;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserUsername(String userUsername) {
-        this.userUsername = userUsername;
+    public void setUsername(String userUsername) {
+        this.username = userUsername;
     }
 
     public List<Integer> getSneakersId() {

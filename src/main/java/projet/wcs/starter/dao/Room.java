@@ -112,6 +112,13 @@ public class Room {
     }
 
     public User getWinner() {
+        if(isClosed() && this.auctions.size() > 0) {
+                Auction winningAuction = this.auctions.stream().max(Comparator.comparing(
+                        Auction::getOffer)).get();
+                return winningAuction.getUser();
+        } else if (isClosed() && this.auctions.size() == 0) {
+            return this.owner;
+        }
         return winner;
     }
 
@@ -135,5 +142,11 @@ public class Room {
         c.add(Calendar.DATE, 7);
 
         return c.getTime();
+    }
+
+    private boolean isClosed() {
+        long now = new Date().getTime();
+        long endDate = this.endDate.getTime();
+        return now >= endDate;
     }
 }

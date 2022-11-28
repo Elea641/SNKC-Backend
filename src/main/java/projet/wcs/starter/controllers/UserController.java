@@ -48,5 +48,10 @@ public class UserController {
         return modelMapper.map(user, UserDto.class);
     }
 
+    @GetMapping("/{id}")
+    public UserDto showUser(@PathVariable Integer id) {
+        return modelMapper.map(repo.findById(id).get(), UserDto.class);
+    }
+
 
 }
