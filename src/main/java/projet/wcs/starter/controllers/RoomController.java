@@ -42,6 +42,24 @@ public class RoomController {
         ).collect(Collectors.toList());
     }
 
+    @GetMapping("/rooms/open")
+    public List<RoomDto> openRoomsByOwner() {
+        Date now = new Date();
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return roomRepo.findOpenRooms(now, userDetails.getId()).stream().map(
+                rooms -> modelMapper.map(rooms, RoomDto.class)
+        ).collect(Collectors.toList());
+    }
+
+    @GetMapping("/rooms/closed")
+    public List<RoomDto> closedRoomsByOwner() {
+        Date now = new Date();
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return roomRepo.findClosedRooms(now, userDetails.getId()).stream().map(
+                rooms -> modelMapper.map(rooms, RoomDto.class)
+        ).collect(Collectors.toList());
+    }
+
     @GetMapping("/room/{id}")
     public RoomDto roomById(@PathVariable Integer id) {
         return modelMapper.map(roomRepo.findById(id).get(), RoomDto.class);
