@@ -1,5 +1,7 @@
 package projet.wcs.starter.dto;
 
+import jakarta.persistence.Lob;
+
 import java.util.List;
 
 public class UserDto {
@@ -11,6 +13,9 @@ public class UserDto {
     private List<Integer> userRoomsId;
     private List<Integer> attendingRoomsId;
     private List<Integer> auctionsId;
+
+    @Lob
+    private String picture;
 
     public Integer getId() {
         return id;
@@ -74,5 +79,13 @@ public class UserDto {
 
     public void setAuctionsId(List<Integer> auctionsId) {
         this.auctionsId = auctionsId;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }
