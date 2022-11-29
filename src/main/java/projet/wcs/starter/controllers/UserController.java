@@ -7,10 +7,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import projet.wcs.starter.dao.User;
 import projet.wcs.starter.dto.UserDto;
+import projet.wcs.starter.models.ERole;
+import projet.wcs.starter.models.Role;
+import projet.wcs.starter.repositories.RoleRepository;
 import projet.wcs.starter.repositories.UserRepository;
 import projet.wcs.starter.services.UserDetailsImpl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,6 +24,8 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserRepository repo;
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -39,11 +46,12 @@ public class UserController {
         return userDto;
     }
 
-    @PatchMapping("/me")
+    @PutMapping("/me")
     public  UserDto updateMe(@RequestBody UserDto userDto) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = repo.findById(userDetails.getId()).get();
         user.setEmail(userDto.getEmail());
+        user.setPicture(userDto.getPicture());
         user = repo.save(user);
         return modelMapper.map(user, UserDto.class);
     }

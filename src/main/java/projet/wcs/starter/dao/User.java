@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import projet.wcs.starter.models.Role;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -46,6 +47,18 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] picture;
+
+    public String getPicture() {
+        return new String(picture, StandardCharsets.UTF_8);
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture.getBytes();
+    }
 
     public String getEmail() {
         return email;
