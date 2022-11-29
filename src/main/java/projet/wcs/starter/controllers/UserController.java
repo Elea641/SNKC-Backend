@@ -51,6 +51,7 @@ public class UserController {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = repo.findById(userDetails.getId()).get();
         user.setEmail(userDto.getEmail());
+        user.setUsername(userDto.getUsername());
         user.setPicture(userDto.getPicture());
         user = repo.save(user);
         return modelMapper.map(user, UserDto.class);

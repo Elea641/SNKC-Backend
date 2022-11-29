@@ -53,7 +53,8 @@ public class User {
     private byte[] picture;
 
     public String getPicture() {
-        return new String(picture, StandardCharsets.UTF_8);
+
+        return picture != null ? new String(picture, StandardCharsets.UTF_8) : null;
     }
 
     public void setPicture(String picture) {
