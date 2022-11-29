@@ -3,6 +3,7 @@ package projet.wcs.starter.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import projet.wcs.starter.dao.Room;
 import projet.wcs.starter.models.enums.ColorType;
@@ -26,6 +27,11 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     @Query(value = "select * from room as r where r.end_date <= :now and r.owner_id = :id", nativeQuery = true)
     List<Room> findClosedRooms(@Param("now") Date now, @Param("id") int id);
+
+    @Query(value = "select r.end_date, r.start_date, r.sneakers_id, r.initial_price, r.winner_id, r.id, r.owner_id " +
+            "from room as r JOIN auction as a on r.id = a.room_id where a.user_id = :id and r.end_date > now() " +
+            "group by r.id", nativeQuery = true)
+    List<Room> findAttendingOpenRooms(@Param("id") int id);
 
     @Query(value = "select brand, model, size, state_of_wear, main_color from room inner join sneakers on sneakers.id=room.sneakers_id;", nativeQuery = true)
     List<Room> findRoomFilter();
