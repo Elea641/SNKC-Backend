@@ -200,4 +200,13 @@ public class RoomController {
                         auctions -> modelMapper.map(auctions, AuctionDto.class)
                 ).collect(Collectors.toList());
     }
+
+    @GetMapping("/rooms/open/attending")
+    public List<RoomDto> attendingOpenRooms() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return roomRepo.findAttendingOpenRooms(userDetails.getId()).stream().map(
+                rooms -> modelMapper.map(rooms, RoomDto.class)
+        ).collect(Collectors.toList());
+    }
+
 }
