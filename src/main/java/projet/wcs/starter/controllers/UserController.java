@@ -62,5 +62,8 @@ public class UserController {
         return modelMapper.map(repo.findById(id).get(), UserDto.class);
     }
 
-
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+        repo.deleteById(id);
+    }
 }

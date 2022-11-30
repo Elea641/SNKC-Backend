@@ -31,7 +31,7 @@ public class Sneakers {
     private StateOfWearType stateOfWear;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
