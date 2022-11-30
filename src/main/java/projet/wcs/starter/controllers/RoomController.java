@@ -42,6 +42,13 @@ public class RoomController {
         ).collect(Collectors.toList());
     }
 
+    @GetMapping("/rooms/all/open")
+    public  List<RoomDto> openRooms() {
+        return roomRepo.findAllOpenRooms().stream().map(
+                rooms -> modelMapper.map(rooms, RoomDto.class)
+        ).collect(Collectors.toList());
+    }
+
     @GetMapping("/rooms/open")
     public List<RoomDto> openRoomsByOwner() {
         Date now = new Date();

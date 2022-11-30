@@ -5,6 +5,8 @@ import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import projet.wcs.starter.convertors.*;
+import projet.wcs.starter.dao.Auction;
+import projet.wcs.starter.dto.AuctionDto;
 import projet.wcs.starter.dto.RoomDto;
 import projet.wcs.starter.dto.SneakersDto;
 import projet.wcs.starter.dto.UserDto;
@@ -46,6 +48,14 @@ public class Mapper {
                 mapper -> {
                     mapper.map(src -> src.getUser().getId(), SneakersDto::setUserId);
                     mapper.map(Sneakers::getPictureString, SneakersDto::setPicture);
+                }
+        );
+
+        TypeMap<Auction, AuctionDto> propertyMapperAuction = modelMapper.createTypeMap(Auction.class, AuctionDto.class);
+        propertyMapperAuction.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getUser().getId(), AuctionDto::setUserId);
+                    mapper.map(src  -> src.getUser().getUsername(), AuctionDto::setUserUsername);
                 }
         );
 
