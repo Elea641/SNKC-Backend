@@ -61,7 +61,7 @@ public class AuctionDto {
         return userUsername;
     }
 
-    public void setUserUsername(String userUsername) {
-        this.userUsername = userUsername;
+    public void setUserUsername(String username) {
+        this.userUsername = username;
     }
 }

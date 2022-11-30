@@ -39,7 +39,6 @@ public class AuctionController {
     public AuctionDto createAuction(@RequestBody @Valid AuctionDto auction) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         auction.setUserId(userDetails.getId());
-        auction.setUserUsername((userRepo.findUserByEmail(userDetails.getUsername())).getUsername());
         auction.setDate(LocalDateTime.now());
         Auction savedAuction = auctionRepo.save(modelMapper.map(auction, Auction.class));
         return modelMapper.map(savedAuction, AuctionDto.class);

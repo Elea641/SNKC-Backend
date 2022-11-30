@@ -33,6 +33,9 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
             "group by r.id", nativeQuery = true)
     List<Room> findAttendingOpenRooms(@Param("id") int id);
 
+    @Query(value = "select * from room where room.end_date > now()", nativeQuery = true)
+    List<Room> findAllOpenRooms();
+
     @Query(value = "select brand, model, size, state_of_wear, main_color from room inner join sneakers on sneakers.id=room.sneakers_id;", nativeQuery = true)
     List<Room> findRoomFilter();
 
