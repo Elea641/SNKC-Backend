@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import projet.wcs.starter.entities.Product;
+import projet.wcs.starter.dao.Product;
 import projet.wcs.starter.repositories.ProductRepository;
 
 import java.net.URI;

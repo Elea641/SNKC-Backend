@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import projet.wcs.starter.entities.User;
+import projet.wcs.starter.dao.User;
 import projet.wcs.starter.exceptions.TokenRefreshException;
 import projet.wcs.starter.models.*;
 import projet.wcs.starter.repositories.RoleRepository;
@@ -71,7 +71,9 @@ public class AuthController {
                 .map(refreshTokenService::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(user -> {
-                    String token = jwtUtil.generateTokenFromUsername(user.getEmail(), user.getRoles().stream().map(Object::toString).toList());
+                    String token = jwtUtil.generateTokenFromUsername(user.getEmail(),
+                            user.getRoles().stream().map(Object::toString).toList(),
+                            user.getId());
                     return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
@@ -88,7 +90,8 @@ public class AuthController {
         }
 
         User user = new User(registerRequest.getEmail(),
-                passwordEncoder.encode(registerRequest.getPassword()));
+                passwordEncoder.encode(registerRequest.getPassword()), registerRequest.getUsername());
+
 
         Set<String> strRoles = registerRequest.getRole();
         Set<Role> roles = new HashSet<>();
