@@ -45,22 +45,21 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         String jwt = jwtUtil.generateJwtToken(userDetails, roles);
-
-
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
-        return ResponseEntity.ok(new AuthResponse(
+        AuthResponse authResponse = new AuthResponse(
                 userDetails.getId(),
                 userDetails.getEmail(),
                 jwt,
                 roles,
-                refreshToken.getToken()));
+                refreshToken.getToken());
+
+        return ResponseEntity.ok(authResponse);
     }
 
     @PostMapping("/refreshtoken")
